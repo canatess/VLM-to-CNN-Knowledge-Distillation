@@ -1,0 +1,44 @@
+# Base configuration for CUB-200-2011 Knowledge Distillation
+
+# Experiment settings
+experiment_name: "cub_kd_base"
+seed: 42
+output_dir: "./outputs"
+
+# Dataset
+data_root: "CUB_200_2011"
+image_size: 224
+batch_size: 32
+num_workers: 4
+val_ratio: 0.1
+
+# Models
+teacher_model: "openai/clip-vit-base-patch32"
+student_architecture: "resnet18"
+num_classes: 200
+pretrained: true
+
+# Training
+num_epochs: 50
+learning_rate: 0.0003
+weight_decay: 0.01
+optimizer: "adamw"
+scheduler: "cosine"
+
+# Distillation (disabled by default)
+distillation_type: "none"
+alpha_ce: 1.0
+alpha_kd: 1.0
+alpha_attention: 0.1
+temperature: 4.0
+attention_loss_type: "mse"
+attention_match_to: "teacher"
+
+# Training settings
+use_amp: false
+log_interval: 10
+eval_interval: 1
+save_best_only: true
+
+# Device
+device: "cuda"

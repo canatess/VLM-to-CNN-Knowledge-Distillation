@@ -1,0 +1,15 @@
+# Logit-based Knowledge Distillation Configuration
+
+# Inherit from base
+experiment_name: "cub_logit_kd"
+
+# Distillation settings
+distillation_type: "logit"
+alpha_ce: 1.0
+alpha_kd: 1.0
+alpha_attention: 0.0
+temperature: 4.0
+
+# Training (logit KD typically needs fewer epochs)
+num_epochs: 30
+learning_rate: 0.0003

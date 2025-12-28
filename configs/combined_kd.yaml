@@ -1,0 +1,18 @@
+# Combined Knowledge Distillation Configuration
+
+# Inherit from base
+experiment_name: "cub_combined_kd"
+
+# Distillation settings - use both logit and attention distillation
+distillation_type: "combined"
+alpha_ce: 1.0
+alpha_kd: 1.0
+alpha_attention: 0.1
+temperature: 4.0
+attention_loss_type: "mse"
+attention_match_to: "teacher"
+
+# Training
+num_epochs: 50
+learning_rate: 0.0003
+batch_size: 32

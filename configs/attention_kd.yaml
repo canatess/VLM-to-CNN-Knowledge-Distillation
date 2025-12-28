@@ -1,0 +1,16 @@
+# Attention-based Knowledge Distillation Configuration
+
+# Inherit from base
+experiment_name: "cub_attention_kd"
+
+# Distillation settings
+distillation_type: "attention"
+alpha_ce: 1.0
+alpha_kd: 0.0
+alpha_attention: 0.5
+attention_loss_type: "mse"
+attention_match_to: "teacher"
+
+# Training
+num_epochs: 40
+learning_rate: 0.0003
