@@ -19,7 +19,7 @@ This framework combines multiple knowledge distillation techniques in a single, 
 ## 📁 Project Structure
 
 ```
-Project/
+VLM-to-CNN-Knowledge-Distillation/
 ├── configs/                    # Configuration files
 │   ├── base.yaml              # Base configuration
 │   ├── logit_kd.yaml          # Logit distillation config
@@ -55,7 +55,7 @@ Project/
 ### 1. Clone the repository
 
 ```bash
-cd cub_kd
+cd VLM-to-CNN-Knowledge-Distillation
 ```
 
 ### 2. Create virtual environment (recommended)
