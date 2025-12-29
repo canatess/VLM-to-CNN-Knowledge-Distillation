@@ -1,5 +1,3 @@
-"""Training and evaluation utilities."""
-
 from .trainer import Trainer
 from .evaluator import evaluate_model, compute_metrics
 
