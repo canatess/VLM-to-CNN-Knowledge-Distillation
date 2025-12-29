@@ -1,5 +1,3 @@
-"""CLIP-based teacher model for knowledge distillation."""
-
 from typing import List, Optional
 import torch
 import torch.nn as nn
@@ -71,21 +69,7 @@ class CLIPTeacher(nn.Module):
         pixel_values: torch.Tensor,
         return_attention: bool = False
     ):
-        """
-        Forward pass through CLIP teacher.
-        
-        Args:
-            pixel_values: Image tensor [B, 3, H, W]
-            return_attention: Whether to return attention maps
-        
-        Returns:
-            If return_attention is False:
-                logits: Classification logits [B, num_classes]
-            If return_attention is True:
-                dict with keys:
-                    - 'logits': Classification logits [B, num_classes]
-                    - 'attention': Attention maps (if available)
-        """
+
         # Get text and attention mask on the same device
         text_input_ids = self.text_input_ids.to(pixel_values.device)
         text_attention_mask = self.text_attention_mask.to(pixel_values.device)
@@ -113,47 +97,19 @@ class CLIPTeacher(nn.Module):
         return logits
     
     def get_logits(self, pixel_values: torch.Tensor) -> torch.Tensor:
-        """
-        Get classification logits only.
-        
-        Args:
-            pixel_values: Image tensor [B, 3, H, W]
-        
-        Returns:
-            Classification logits [B, num_classes]
-        """
         return self.forward(pixel_values, return_attention=False)
     
     def get_attention_rollout(self, pixel_values: torch.Tensor) -> torch.Tensor:
-        """
-        Get attention rollout from CLIP vision encoder.
-        
-        Args:
-            pixel_values: Image tensor [B, 3, H, W]
-        
-        Returns:
-            Attention map [B, 1, H, W]
-        """
         outputs = self.forward(pixel_values, return_attention=True)
         
         if isinstance(outputs, dict) and "attention" in outputs:
             attention_maps = outputs["attention"]
-            # Compute attention rollout
             rollout = self._compute_attention_rollout(attention_maps)
             return rollout
         
         raise RuntimeError("Attention maps not available")
     
     def _compute_attention_rollout(self, attention_maps: tuple) -> torch.Tensor:
-        """
-        Compute attention rollout from layer-wise attention maps.
-        
-        Args:
-            attention_maps: Tuple of attention tensors from each layer
-        
-        Returns:
-            Rolled out attention map [B, 1, H, W]
-        """
         # Stack attention maps: [num_layers, B, num_heads, num_patches, num_patches]
         attentions = torch.stack(attention_maps)
         
