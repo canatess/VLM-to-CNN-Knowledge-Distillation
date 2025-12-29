@@ -1,5 +1,3 @@
-"""CNN-based student models for knowledge distillation."""
-
 import timm
 import torch
 import torch.nn as nn
@@ -7,18 +5,6 @@ from typing import Optional, Dict
 
 
 class StudentCNN(nn.Module):
-    """
-    CNN-based student model using timm library.
-    
-    Supports various CNN architectures (ResNet, VGG, MobileNet, EfficientNet, etc.)
-    for learning from teacher through knowledge distillation.
-    
-    Args:
-        architecture: Model architecture name (e.g., 'resnet18', 'mobilenetv3_small')
-        num_classes: Number of output classes
-        pretrained: Whether to use pretrained weights
-        extract_features: Whether to enable feature extraction for attention distillation
-    """
     
     # Mapping of common architecture names to timm model names
     ARCH_MAPPING = {
@@ -160,12 +146,6 @@ class StudentCNN(nn.Module):
         return attention
     
     def get_num_parameters(self) -> Dict[str, int]:
-        """
-        Get number of parameters in the model.
-        
-        Returns:
-            Dictionary with total and trainable parameter counts
-        """
         total_params = sum(p.numel() for p in self.parameters())
         trainable_params = sum(p.numel() for p in self.parameters() if p.requires_grad)
         
@@ -181,18 +161,7 @@ def build_student(
     pretrained: bool = True,
     extract_features: bool = False,
 ) -> StudentCNN:
-    """
-    Factory function to build student CNN model.
-    
-    Args:
-        architecture: Model architecture name
-        num_classes: Number of output classes
-        pretrained: Whether to use pretrained weights
-        extract_features: Whether to enable feature extraction
-    
-    Returns:
-        StudentCNN instance
-    """
+
     return StudentCNN(
         architecture=architecture,
         num_classes=num_classes,
