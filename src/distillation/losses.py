@@ -1,5 +1,3 @@
-"""Loss functions for knowledge distillation."""
-
 import torch
 import torch.nn.functional as F
 from typing import Optional, Literal
@@ -38,16 +36,7 @@ def cross_entropy_loss(
     logits: torch.Tensor,
     targets: torch.Tensor,
 ) -> torch.Tensor:
-    """
-    Standard cross-entropy loss for classification.
-    
-    Args:
-        logits: Model logits [B, num_classes]
-        targets: Ground truth labels [B]
-    
-    Returns:
-        Cross-entropy loss (scalar)
-    """
+
     return F.cross_entropy(logits, targets)
 
 
