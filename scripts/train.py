@@ -1,26 +1,3 @@
-"""
-Main training script for CUB-200-2011 Knowledge Distillation.
-
-This script supports multiple training modes:
-1. Standard training (from scratch or pretrained)
-2. Logit-based knowledge distillation
-3. Attention-based knowledge distillation
-4. Combined distillation (logit + attention)
-
-Usage:
-    # Train with default config
-    python scripts/train.py
-
-    # Train with specific config
-    python scripts/train.py --config configs/logit_kd.yaml
-
-    # Override specific parameters
-    python scripts/train.py --config configs/base.yaml --student_architecture mobilenetv3_small --num_epochs 30
-
-    # Train from scratch (no pretrained weights)
-    python scripts/train.py --pretrained false --distillation_type none
-"""
-
 import argparse
 import sys
 from pathlib import Path
@@ -40,7 +17,6 @@ from src.training import Trainer
 
 
 def parse_args():
-    """Parse command line arguments."""
     parser = argparse.ArgumentParser(description="Train CUB-200-2011 Knowledge Distillation")
     
     # Configuration
@@ -81,7 +57,6 @@ def parse_args():
 
 
 def build_optimizer(model, config: Config):
-    """Build optimizer from config."""
     if config.optimizer.lower() == "adamw":
         return optim.AdamW(
             model.parameters(),
@@ -100,7 +75,6 @@ def build_optimizer(model, config: Config):
 
 
 def build_scheduler(optimizer, config: Config, num_steps: int):
-    """Build learning rate scheduler from config."""
     if config.scheduler is None or config.scheduler.lower() == "none":
         return None
     elif config.scheduler.lower() == "cosine":
@@ -112,7 +86,6 @@ def build_scheduler(optimizer, config: Config, num_steps: int):
 
 
 def main():
-    """Main training function."""
     args = parse_args()
     
     # Load base configuration
