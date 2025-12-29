@@ -264,9 +264,9 @@ python scripts/train.py \
 If you use this framework in your research, please cite:
 
 ```bibtex
-@misc{cub_kd_framework,
+@misc{VLM-to-CNN-Knowledge-Distillation,
   title={Unified Knowledge Distillation Framework for Fine-Grained Bird Classification},
-  author={Your Name},
+  author={Can Ali Ateş, Abdullah Enes Ergün, Emre Çoban},
   year={2025}
 }
 ```
