@@ -1,5 +1,3 @@
-"""CUB-200-2011 dataset implementation."""
-
 import os
 from typing import List, Tuple, Optional
 from PIL import Image
@@ -9,7 +7,6 @@ from sklearn.model_selection import StratifiedShuffleSplit
 
 
 def _read_kv_file(path: str) -> dict:
-    """Read space-separated key-value file."""
     data = {}
     with open(path, "r") as f:
         for line in f:
@@ -20,7 +17,6 @@ def _read_kv_file(path: str) -> dict:
 
 
 def load_class_names(root: str) -> List[str]:
-    """Load class names from classes.txt file."""
     classes_path = os.path.join(root, "classes.txt")
     class_names = []
     with open(classes_path, "r") as f:
@@ -37,17 +33,7 @@ def stratified_split(
     val_ratio: float = 0.1,
     seed: int = 42
 ) -> Tuple[List[int], List[int]]:
-    """
-    Create stratified train-validation split from a dataset.
-    
-    Args:
-        dataset: Dataset with samples attribute containing (path, label) tuples
-        val_ratio: Ratio of validation samples
-        seed: Random seed for reproducibility
-    
-    Returns:
-        Tuple of (train_indices, val_indices)
-    """
+
     labels = np.array([sample[1] for sample in dataset.samples])
     
     sss = StratifiedShuffleSplit(n_splits=1, test_size=val_ratio, random_state=seed)
@@ -58,14 +44,6 @@ def stratified_split(
 
 
 class CUB200Dataset(Dataset):
-    """
-    CUB-200-2011 dataset for fine-grained bird classification.
-    
-    Args:
-        root: Path to CUB_200_2011 directory
-        train: If True, use training split; otherwise use test split
-        transform: Optional transform to be applied on images
-    """
     
     def __init__(
         self,
@@ -129,24 +107,7 @@ def build_dataloaders(
     train_transform: Optional[callable] = None,
     test_transform: Optional[callable] = None,
 ) -> Tuple[DataLoader, ...]:
-    """
-    Build train, validation (optional), and test dataloaders.
-    
-    Args:
-        root: Path to CUB_200_2011 directory
-        image_size: Image size for transforms
-        batch_size: Batch size for dataloaders
-        num_workers: Number of worker processes for data loading
-        pin_memory: Whether to use pinned memory
-        val_ratio: Ratio of training data to use for validation (0 = no validation split)
-        seed: Random seed for validation split
-        train_transform: Transform for training data
-        test_transform: Transform for test data
-    
-    Returns:
-        If val_ratio > 0: (train_loader, val_loader, test_loader)
-        If val_ratio == 0: (train_loader, test_loader)
-    """
+
     from .transforms import build_transforms
     
     if train_transform is None:
