@@ -1,5 +1,3 @@
-"""Knowledge distillation losses and utilities."""
-
 from .losses import (
     logit_distillation_loss,
     cross_entropy_loss,
