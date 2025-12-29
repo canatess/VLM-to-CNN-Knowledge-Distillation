@@ -1,5 +1,3 @@
-"""Utility functions and helpers."""
-
 from .config import Config, load_config, save_config
 from .helpers import set_seed, ensure_dir, get_device
 from .metrics import AverageMeter, MetricsTracker
