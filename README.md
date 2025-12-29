@@ -19,7 +19,7 @@ This framework combines multiple knowledge distillation techniques in a single, 
 ## 📁 Project Structure
 
 ```
-cub_kd/
+Project/
 ├── configs/                    # Configuration files
 │   ├── base.yaml              # Base configuration
 │   ├── logit_kd.yaml          # Logit distillation config
