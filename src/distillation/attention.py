@@ -1,5 +1,3 @@
-"""Attention map processing utilities for attention-based distillation."""
-
 import torch
 import torch.nn.functional as F
 
@@ -56,15 +54,6 @@ def compute_attention_rollout(
 
 
 def normalize_attention(attention_map: torch.Tensor) -> torch.Tensor:
-    """
-    Normalize attention map to [0, 1] range.
-    
-    Args:
-        attention_map: Attention map [B, 1, H, W]
-    
-    Returns:
-        Normalized attention map [B, 1, H, W]
-    """
     # Min-max normalization per sample
     batch_size = attention_map.shape[0]
     attention_flat = attention_map.view(batch_size, -1)
@@ -82,17 +71,6 @@ def resize_attention_map(
     target_size: tuple,
     mode: str = "bilinear"
 ) -> torch.Tensor:
-    """
-    Resize attention map to target spatial size.
-    
-    Args:
-        attention_map: Attention map [B, 1, H, W]
-        target_size: Target spatial size (H, W)
-        mode: Interpolation mode ('bilinear', 'nearest', 'bicubic')
-    
-    Returns:
-        Resized attention map [B, 1, target_H, target_W]
-    """
     if attention_map.shape[2:] == target_size:
         return attention_map
     
@@ -113,16 +91,7 @@ def spatial_attention_from_features(
     feature_map: torch.Tensor,
     method: str = "mean"
 ) -> torch.Tensor:
-    """
-    Generate spatial attention map from CNN feature maps.
-    
-    Args:
-        feature_map: Feature map from CNN [B, C, H, W]
-        method: Method to aggregate channels ('mean', 'max', 'std')
-    
-    Returns:
-        Attention map [B, 1, H, W]
-    """
+
     if method == "mean":
         # Average absolute activations across channels
         attention = feature_map.abs().mean(dim=1, keepdim=True)
@@ -149,17 +118,7 @@ def match_attention_resolution(
     teacher_attention: torch.Tensor,
     match_to: str = "teacher"
 ) -> tuple:
-    """
-    Match the spatial resolution of student and teacher attention maps.
-    
-    Args:
-        student_attention: Student attention map [B, 1, Hs, Ws]
-        teacher_attention: Teacher attention map [B, 1, Ht, Wt]
-        match_to: Which resolution to match ('teacher' or 'student')
-    
-    Returns:
-        Tuple of (student_attention, teacher_attention) with matched resolutions
-    """
+
     if match_to == "teacher":
         target_size = teacher_attention.shape[2:]
         student_attention = resize_attention_map(student_attention, target_size)
