@@ -1,5 +1,3 @@
-"""Model evaluation utilities."""
-
 from typing import Dict, Optional
 import torch
 import torch.nn as nn
@@ -109,17 +107,7 @@ def compute_metrics(
     targets: np.ndarray,
     num_classes: int = 200
 ) -> Dict[str, float]:
-    """
-    Compute additional classification metrics.
-    
-    Args:
-        predictions: Predicted labels [N]
-        targets: Ground truth labels [N]
-        num_classes: Number of classes
-    
-    Returns:
-        Dictionary with metrics (accuracy, per-class accuracy, etc.)
-    """
+
     from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
     
     # Overall accuracy
@@ -151,18 +139,7 @@ def compute_top_k_accuracy(
     device: str = "cuda",
     k: int = 5
 ) -> float:
-    """
-    Compute top-k accuracy.
-    
-    Args:
-        model: Model to evaluate
-        data_loader: Data loader for evaluation
-        device: Device to run on
-        k: Top-k value
-    
-    Returns:
-        Top-k accuracy as percentage
-    """
+
     model.eval()
     
     correct = 0
@@ -195,19 +172,7 @@ def measure_inference_time(
     warmup_runs: int = 10,
     num_runs: int = 100
 ) -> Dict[str, float]:
-    """
-    Measure model inference time.
-    
-    Args:
-        model: Model to measure
-        input_size: Input tensor size (B, C, H, W)
-        device: Device to run on
-        warmup_runs: Number of warmup runs
-        num_runs: Number of measurement runs
-    
-    Returns:
-        Dictionary with timing statistics (ms)
-    """
+
     model.eval()
     model.to(device)
     
@@ -248,15 +213,6 @@ def measure_inference_time(
 
 
 def count_parameters(model: nn.Module) -> Dict[str, int]:
-    """
-    Count model parameters.
-    
-    Args:
-        model: Model to analyze
-    
-    Returns:
-        Dictionary with parameter counts
-    """
     total_params = sum(p.numel() for p in model.parameters())
     trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
     
@@ -268,15 +224,6 @@ def count_parameters(model: nn.Module) -> Dict[str, int]:
 
 
 def model_size_mb(model: nn.Module) -> float:
-    """
-    Estimate model size in MB.
-    
-    Args:
-        model: Model to analyze
-    
-    Returns:
-        Model size in MB
-    """
     param_size = 0
     for param in model.parameters():
         param_size += param.nelement() * param.element_size()
