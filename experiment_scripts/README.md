@@ -18,7 +18,7 @@ Each script runs 5 experiments sequentially:
 # Execute a script
 
 .\experiment_scripts\run_resnet34_experiments.ps1
-.\experiment_scripts\run_mobilenet_experiments.ps1
+.\experiment_scripts\run_mobilenetv3_large_experiments.ps1
 ```
 
 ## Configuration
