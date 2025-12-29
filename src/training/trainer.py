@@ -1,5 +1,3 @@
-"""Training loop implementation."""
-
 from typing import Optional, Dict, Any, Callable
 import torch
 import torch.nn as nn
@@ -77,12 +75,6 @@ class Trainer:
         }
     
     def train_epoch(self) -> Dict[str, float]:
-        """
-        Train for one epoch.
-        
-        Returns:
-            Dictionary with training metrics
-        """
         self.model.train()
         
         total_loss = 0.0
@@ -141,12 +133,10 @@ class Trainer:
                 predictions = logits.argmax(dim=1)
                 loss = loss.item()
             
-            # Update metrics
             total_loss += loss * batch_size
             correct += (predictions == targets).sum().item()
             total_samples += batch_size
             
-            # Update progress bar
             if (batch_idx + 1) % self.log_interval == 0:
                 current_acc = 100.0 * correct / total_samples
                 pbar.set_postfix({
@@ -156,7 +146,6 @@ class Trainer:
             
             self.global_step += 1
         
-        # Compute epoch metrics
         avg_loss = total_loss / total_samples
         accuracy = 100.0 * correct / total_samples
         
@@ -179,17 +168,7 @@ class Trainer:
         save_path: Optional[str] = None,
         save_best_only: bool = True,
     ) -> Dict[str, Any]:
-        """
-        Train for multiple epochs.
         
-        Args:
-            num_epochs: Number of epochs to train
-            save_path: Path to save best model checkpoint
-            save_best_only: Whether to save only the best model
-        
-        Returns:
-            Dictionary with training history
-        """
         print(f"\n{'='*60}")
         print(f"Starting training for {num_epochs} epochs")
         print(f"Device: {self.device}")
@@ -202,32 +181,26 @@ class Trainer:
         
         for epoch in range(num_epochs):
             self.current_epoch = epoch
-            
-            # Train for one epoch
+
             train_metrics = self.train_epoch()
-            
-            # Update learning rate
+
             if self.scheduler is not None:
                 self.scheduler.step()
-            
-            # Log training metrics
+
             print(f"\nEpoch {epoch + 1}/{num_epochs}")
             print(f"  Train Loss: {train_metrics['loss']:.4f}")
             print(f"  Train Acc:  {train_metrics['accuracy']:.2f}%")
-            
-            # Log KD components if available
+
             if "ce_loss" in train_metrics:
                 print(f"  CE Loss:    {train_metrics['ce_loss']:.4f}")
             if "kd_loss" in train_metrics:
                 print(f"  KD Loss:    {train_metrics['kd_loss']:.4f}")
             if "attention_loss" in train_metrics:
                 print(f"  Attn Loss:  {train_metrics['attention_loss']:.4f}")
-            
-            # Save to history
+
             self.history["train_loss"].append(train_metrics['loss'])
             self.history["train_acc"].append(train_metrics['accuracy'])
-            
-            # Evaluate on validation set
+
             if self.val_loader and (epoch + 1) % self.eval_interval == 0:
                 val_metrics = evaluate_model(
                     self.model,
@@ -247,7 +220,7 @@ class Trainer:
                 self.history.setdefault("val_f1_weighted", []).append(val_metrics.get('f1_weighted', 0))
                 self.history.setdefault("val_f1_micro", []).append(val_metrics.get('f1_micro', 0))
                 
-                # Save best model
+                # Save best model based on validation results
                 if val_metrics['accuracy'] > self.best_val_acc:
                     self.best_val_acc = val_metrics['accuracy']
                     if save_path and save_best_only:
