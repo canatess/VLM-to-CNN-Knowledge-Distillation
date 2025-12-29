@@ -1,5 +1,3 @@
-"""High-level knowledge distillation orchestrator."""
-
 from typing import Literal, Optional, Dict, Any
 import torch
 import torch.nn as nn
@@ -66,16 +64,7 @@ class KnowledgeDistiller:
         images: torch.Tensor,
         return_attention: bool = False
     ) -> Dict[str, torch.Tensor]:
-        """
-        Get teacher model outputs.
-        
-        Args:
-            images: Input images [B, 3, H, W]
-            return_attention: Whether to extract attention maps
-        
-        Returns:
-            Dictionary with teacher outputs
-        """
+       
         self.teacher.eval()
         
         outputs = {}
@@ -103,16 +92,7 @@ class KnowledgeDistiller:
         images: torch.Tensor,
         return_attention: bool = False
     ) -> Dict[str, torch.Tensor]:
-        """
-        Get student model outputs.
         
-        Args:
-            images: Input images [B, 3, H, W]
-            return_attention: Whether to extract attention maps
-        
-        Returns:
-            Dictionary with student outputs
-        """
         outputs = {}
         
         if return_attention and hasattr(self.student, 'get_attention_map'):
@@ -134,16 +114,7 @@ class KnowledgeDistiller:
         images: torch.Tensor,
         targets: torch.Tensor,
     ) -> Dict[str, torch.Tensor]:
-        """
-        Compute distillation loss.
         
-        Args:
-            images: Input images [B, 3, H, W]
-            targets: Ground truth labels [B]
-        
-        Returns:
-            Dictionary with loss components
-        """
         # Determine if we need attention
         need_attention = (
             self.distillation_type in ["attention", "combined"] and
@@ -195,18 +166,7 @@ class KnowledgeDistiller:
         optimizer: torch.optim.Optimizer,
         scaler: Optional[Any] = None,
     ) -> Dict[str, float]:
-        """
-        Perform a single training step.
-        
-        Args:
-            images: Input images [B, 3, H, W]
-            targets: Ground truth labels [B]
-            optimizer: Optimizer for student model
-            scaler: Optional GradScaler for mixed precision training
-        
-        Returns:
-            Dictionary with loss values
-        """
+       
         self.student.train()
         
         # Zero gradients
