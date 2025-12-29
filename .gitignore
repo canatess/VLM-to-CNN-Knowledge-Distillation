@@ -60,7 +60,6 @@ logs/
 
 # Data (don't commit large datasets)
 CUB_200_2011/
-data/
 datasets/
 
 # Model checkpoints
