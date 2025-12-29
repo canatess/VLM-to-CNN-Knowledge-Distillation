@@ -2,12 +2,6 @@
 
 This folder contains PowerShell scripts to run the full 5-experiment suite for different CNN architectures.
 
-## Available Scripts
-
-- `run_resnet18_experiments.ps1` - ResNet-18 full suite
-- `run_resnet34_experiments.ps1` - ResNet-34 full suite
-- `run_mobilenet_experiments.ps1` - MobileNetV2 full suite
-
 ## Experiments Run by Each Script
 
 Each script runs 5 experiments sequentially:
@@ -21,13 +15,8 @@ Each script runs 5 experiments sequentially:
 ## Usage
 
 ```powershell
-# Run from project root directory
-cd C:\Users\Can\Desktop\Project
-
 # Execute a script
-.\experiment_scripts\run_resnet18_experiments.ps1
 
-# Or specify architecture
 .\experiment_scripts\run_resnet34_experiments.ps1
 .\experiment_scripts\run_mobilenet_experiments.ps1
 ```
