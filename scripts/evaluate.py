@@ -1,14 +1,3 @@
-"""
-Evaluation script for trained models.
-
-Usage:
-    # Evaluate a trained model
-    python scripts/evaluate.py --model_path outputs/experiment/best_model.pth --config outputs/experiment/config.yaml
-
-    # Evaluate and save predictions
-    python scripts/evaluate.py --model_path best_model.pth --config config.yaml --save_predictions
-"""
-
 import argparse
 import sys
 from pathlib import Path
@@ -27,7 +16,6 @@ from src.training import evaluate_model, compute_top_k_accuracy, measure_inferen
 
 
 def parse_args():
-    """Parse command line arguments."""
     parser = argparse.ArgumentParser(description="Evaluate trained model")
     
     parser.add_argument("--model_path", type=str, required=True,
@@ -47,7 +35,6 @@ def parse_args():
 
 
 def main():
-    """Main evaluation function."""
     args = parse_args()
     
     # Load configuration
