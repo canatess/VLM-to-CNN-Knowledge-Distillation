@@ -1,19 +1,7 @@
-"""Image transformation utilities."""
-
 import torchvision.transforms as T
 
 
 def build_transforms(image_size: int = 224, train: bool = True):
-    """
-    Build image transformations for training or evaluation.
-    
-    Args:
-        image_size: Target image size
-        train: If True, apply data augmentation; otherwise only basic transforms
-    
-    Returns:
-        torchvision.transforms.Compose object
-    """
     normalize = T.Normalize(
         mean=[0.485, 0.456, 0.406],
         std=[0.229, 0.224, 0.225]
@@ -39,15 +27,6 @@ def build_transforms(image_size: int = 224, train: bool = True):
 
 
 def build_clip_transforms(image_size: int = 224):
-    """
-    Build transforms compatible with CLIP preprocessing.
-    
-    Args:
-        image_size: Target image size
-    
-    Returns:
-        torchvision.transforms.Compose object
-    """
     return T.Compose([
         T.Resize(image_size, interpolation=T.InterpolationMode.BICUBIC),
         T.CenterCrop(image_size),
