@@ -1,12 +1,3 @@
-"""
-Run comprehensive experiments comparing different KD methods and architectures.
-
-This script runs multiple experiments with different configurations and compares results.
-
-Usage:
-    python scripts/run_experiments.py --architectures resnet18 mobilenetv3_small --output_dir ./experiments
-"""
-
 import argparse
 import sys
 from pathlib import Path
@@ -20,7 +11,6 @@ from src.utils import Config, ensure_dir
 
 
 def parse_args():
-    """Parse command line arguments."""
     parser = argparse.ArgumentParser(description="Run comprehensive KD experiments")
     
     parser.add_argument("--architectures", nargs="+", 
@@ -42,7 +32,6 @@ def parse_args():
 
 
 def run_single_experiment(arch: str, distill_type: str, config: Config, output_dir: Path):
-    """Run a single experiment."""
     import subprocess
     
     # Update config
@@ -79,7 +68,6 @@ def run_single_experiment(arch: str, distill_type: str, config: Config, output_d
 
 
 def collect_results(output_dir: Path, architectures: list, distill_types: list):
-    """Collect results from all experiments."""
     results = []
     
     for arch in architectures:
@@ -124,7 +112,6 @@ def collect_results(output_dir: Path, architectures: list, distill_types: list):
 
 
 def main():
-    """Main function."""
     args = parse_args()
     
     print("\n" + "="*80)
