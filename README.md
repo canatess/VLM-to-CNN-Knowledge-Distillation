@@ -16,6 +16,9 @@ This framework combines multiple knowledge distillation techniques in a single, 
 - **Comprehensive Evaluation**: Top-1, Top-5 accuracy, inference speed measurements
 - **Experiment Management**: Run and compare multiple experiments systematically
 
+## Overall Methodology
+![Methodology](Methodology.png)
+
 ## 📁 Project Structure
 
 ```
