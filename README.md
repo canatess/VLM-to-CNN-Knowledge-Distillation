@@ -1,4 +1,5 @@
 # CUB-200-2011 Knowledge Distillation Framework
+**[Download the trained models](https://drive.google.com/file/d/1IwJ3oAbCChYZlHMjBHtcUnTnOevkjn4H/view?usp=drivesdk)**
 
 A unified framework for **VLM (Vision-Language Model) to CNN knowledge distillation** for fine-grained bird classification using the CUB-200-2011 dataset.
 
